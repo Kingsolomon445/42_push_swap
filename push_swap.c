@@ -116,15 +116,15 @@ int	main(int argc, char *argv[])
 	int		i;
 
 	if (argc < 2)
-		return (1);
+		return (write(2, "Error\n", 6), 1);
 	i = 0;
 	head_a = NULL;
 	while (argv[++i])
 	{
 		if (!eval_args(&head_a, argv[i]))
-			return (write(2, "Error\n", 6), 1);
+			return (free_all(&head_a), write(2, "Error\n", 6), 1);
 	}
-	if (check_for_duplicates(&head_a))
+	if (is_empty(&head_a) || check_for_duplicates(&head_a))
 		return (free_all(&head_a), write(2, "Error\n", 6), 1);
 	if (is_in_order(&head_a))
 		return (free_all(&head_a), 0);
