@@ -101,15 +101,15 @@ int	eval_args(t_slist **top, char *arg)
 	i = 0;
 	arg_split = ft_split(arg, ' ');
 	if (!arg_split)
-		return (free_all(top), 0);
+		return (0);
 	if (!check_if_all_digits(arg_split) || check_if_within_int_range(arg_split))
-		return (free_all(top), free_arg_split(arg_split), 0);
+		return (free_arg_split(arg_split), 0);
 	while (*(i + arg_split))
 	{
 		data = ft_atoi(*(i + arg_split));
 		new = lstnew(data);
 		if (!new)
-			return (free_all(top), free_arg_split(arg_split), 0);
+			return (free_arg_split(arg_split), 0);
 		if (!(*top))
 			*top = new;
 		else
