@@ -125,7 +125,7 @@ int	main(int argc, char *argv[])
 			return (write(2, "Error\n", 6), 1);
 	}
 	if (check_for_duplicates(&head_a))
-		return (write(2, "Error\n", 6), 1);
+		return (free_all(&head_a), write(2, "Error\n", 6), 1);
 	if (is_in_order(&head_a))
 		return (free_all(&head_a), 0);
 	if (lstsize(head_a) == 3)
