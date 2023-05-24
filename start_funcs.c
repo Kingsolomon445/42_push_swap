@@ -40,6 +40,10 @@ int	check_if_all_digits(char **arg)
 	{
 		str = *(arg + i);
 		j = 0;
+		if (*str == '-' || *str == '+')
+			j++;
+		if (!(*(str + j)))
+			return (0);
 		while (*(str + j))
 		{
 			if (!ft_isdigit(*(str + j)))
@@ -71,7 +75,7 @@ int	check_for_duplicates(t_slist **top)
 	return (0);
 }
 
-int	check_if_bigger_than_max(char **arg)
+int	check_if_within_int_range(char **arg)
 {
 	int		i;
 	long	num;
@@ -80,7 +84,7 @@ int	check_if_bigger_than_max(char **arg)
 	while (*(arg + i))
 	{
 		num = ft_atol(*(arg + i));
-		if (num > 2147483647)
+		if (num > 2147483647 || num < -2147483648)
 			return (1);
 		i++;
 	}
@@ -98,7 +102,7 @@ int	eval_args(t_slist **top, char *arg)
 	arg_split = ft_split(arg, ' ');
 	if (!arg_split)
 		return (free_all(top), 0);
-	if (!check_if_all_digits(arg_split) || check_if_bigger_than_max(arg_split))
+	if (!check_if_all_digits(arg_split) || check_if_within_int_range(arg_split))
 		return (free_all(top), free_arg_split(arg_split), 0);
 	while (*(i + arg_split))
 	{
