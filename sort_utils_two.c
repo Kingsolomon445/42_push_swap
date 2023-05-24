@@ -19,30 +19,22 @@ void	do_if_alloc_fails(t_slist **top_a, t_slist **top_b)
 	exit(EXIT_FAILURE);
 }
 
-void	perform_moves(t_slist **top_a, t_slist **top_b, t_actlist *act)
+void perform_moves(t_slist **top_a, t_slist **top_b, t_actlist *act)
 {
-	if ((act->ra_moves < act->rra_moves && act->rb_moves < act->rrb_moves))
-		rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
-	else if (act->ra_moves >= act->rra_moves && act->rb_moves >= act->rrb_moves)
-		rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
-	else if ((act->ra_moves > act->rra_moves) && (\
-		(act->ra_moves + act->rb_moves) < (act->ra_moves + act->rrb_moves)))
-		rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
-	else if ((act->rra_moves >= act->ra_moves) && (\
-		(act->rra_moves + act->rrb_moves) < (act->rra_moves + act->rb_moves)))
-		rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
-	else if ((act->rb_moves > act->rrb_moves) && (\
-		(act->ra_moves + act->rb_moves) < (act->rb_moves + act->rra_moves)))
-		rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
-	else if ((act->rrb_moves >= act->rb_moves) && (\
-		(act->rra_moves + act->rrb_moves) < (act->rrb_moves + act->ra_moves)))
-		rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
-	else
-	{
-		r_or_rr_action(act->ra_moves, act->rra_moves, top_a, 'a');
-		r_or_rr_action(act->rb_moves, act->rrb_moves, top_b, 'b');
-	}
-	push(top_b, top_a, 'b');
+    if (act->ra_moves < act->rra_moves && act->rb_moves < act->rrb_moves)
+        rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
+    else if (act->ra_moves >= act->rra_moves && act->rb_moves >= act->rrb_moves)
+        rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
+    else if ((max(act->ra_moves, act->rb_moves) <= (act->ra_moves + act->rrb_moves)) && (max(act->ra_moves, act->rb_moves) <= (act->rra_moves + act->ra_moves)))
+        rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
+    else if (max(act->rra_moves, act->rrb_moves) <= act->ra_moves + act->rrb_moves && max(act->rra_moves, act->rrb_moves) <= act->rra_moves + act->ra_moves)
+        rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
+    else
+    {
+        r_or_rr_action(act->ra_moves, act->rra_moves, top_a, 'a');
+        r_or_rr_action(act->rb_moves, act->rrb_moves, top_b, 'b');
+    }
+    push(top_b, top_a, 'b');
 }
 
 /*
