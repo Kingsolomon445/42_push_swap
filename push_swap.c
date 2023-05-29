@@ -6,7 +6,7 @@
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:46:01 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/23 14:17:26 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:23:18 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,14 @@ void	sort(t_slist **top_a)
 
 	top_b = NULL;
 	chunks = get_chunks_size(top_a);
-	start_chunk = find_smallest(top_a);
-	end_chunk = (find_largest(top_a) - find_smallest(top_a)) / chunks;
+	start_chunk = 1;
+	end_chunk = lstsize(*top_a) / chunks;
 	one_fifth = end_chunk - start_chunk;
-	while (chunks)
+	while (!is_empty(top_a))
 	{
-		chunks--;
 		move_chunk_from_a_to_b(top_a, &top_b, start_chunk, end_chunk);
-		start_chunk += one_fifth + 1;
-		end_chunk += one_fifth + 1;
+		start_chunk = end_chunk + 1;
+		end_chunk += one_fifth;
 	}
 	push_from_b_to_a(top_a, &top_b);
 }
@@ -109,14 +108,65 @@ void	sort_five(t_slist **top_a)
 	push(top_a, &top_b, 'a');
 	push(top_a, &top_b, 'a');
 }
+//Insertion Sort algorithm
+//Cant decide precisely what the complexity is but somewhere between 0(n log(n)) and 0(n^2)
 
+int	find_next_smallest(t_slist **top_b, int previous_smallest)
+{
+	int		smallest;
+	t_slist	*current;
+
+	current = *top_b;
+	smallest = 2147483647;
+	while (current)
+	{
+		if (current->data < smallest && current->data > previous_smallest)
+			smallest = current->data;
+		current = current->next;
+	}
+	return (smallest);
+}
+
+void	map_elem(t_slist **top, int data, int map)
+{
+	t_slist	*current;
+
+	current = *top;
+	while (current)
+	{
+		if (current->data == data)
+		{
+			current->map = map;
+			return ;
+		}
+		current = current->next;
+	}
+}
+
+void	map_lst(t_slist **top_a)
+{
+	int size;
+	int map;
+	int cur_smallest;
+
+	size = lstsize(*top_a);
+	map = 1;
+	cur_smallest = find_smallest(top_a);
+	map_elem(top_a, cur_smallest, map);
+	while (--size)
+	{
+		++map;
+		cur_smallest = find_next_smallest(top_a, cur_smallest);
+		map_elem(top_a, cur_smallest, map);
+	}
+}
 int	main(int argc, char *argv[])
 {
 	t_slist	*head_a;
 	int		i;
 
 	if (argc < 2)
-		return (write(2, "Error\n", 6), 1);
+		return (0);
 	i = 0;
 	head_a = NULL;
 	while (argv[++i])
@@ -128,6 +178,8 @@ int	main(int argc, char *argv[])
 		return (free_all(&head_a), write(2, "Error\n", 6), 1);
 	if (is_in_order(&head_a))
 		return (free_all(&head_a), 0);
+	map_lst(&head_a);
+	// print_all(&head_a);
 	if (lstsize(head_a) == 3)
 		sort_three(&head_a);
 	else if (lstsize(head_a) == 5)
@@ -136,5 +188,6 @@ int	main(int argc, char *argv[])
 		sort_less_than_twenty_five(&head_a);
 	else
 		sort(&head_a);
+	// print_all(&head_a);
 	return (free_all(&head_a), 0);
 }
