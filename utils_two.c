@@ -6,7 +6,7 @@
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 12:59:23 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/23 14:06:54 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/05/29 14:46:51 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,17 @@ void	free_all(t_slist **top)
 	free(*top);
 }
 
-void	print_all(t_slist **top_a, t_slist **top_b)
+void	print_all(t_slist **top_a)
 {
 	t_slist	*current_a;
-	t_slist	*current_b;
 
 	current_a = *top_a;
 	ft_printf("\n");
 	ft_printf("Stack A ====   ");
 	while (current_a)
 	{
-		ft_printf("%d -> ", current_a->data);
+		ft_printf("%d (%d)    -> ", current_a->data, current_a->map);
 		current_a = current_a->next;
-	}
-	ft_printf("\n");
-	ft_printf("Stack B ====   ");
-	current_b = *top_b;
-	while (current_b)
-	{
-		ft_printf("%d -> ", current_b->data);
-		current_b = current_b->next;
 	}
 	ft_printf("\n");
 }

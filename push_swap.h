@@ -6,7 +6,7 @@
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:47:11 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/23 13:20:12 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/05/29 14:39:06 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef struct ls_list
 {
 	int				data;
+	int				map;
 	struct ls_list	*next;
 }	t_slist;
 
@@ -60,7 +61,7 @@ int		is_in_order(t_slist **top_a);
 int		get_position(t_slist **top, int data);
 
 void	free_all(t_slist **top);
-void	print_all(t_slist **top_a, t_slist **top_b);
+void	print_all(t_slist **top_a);
 
 int		find_largest(t_slist **top_a);
 int		find_smallest(t_slist **top_b);

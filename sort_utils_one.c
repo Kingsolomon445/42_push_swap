@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_sort_utils_one.c                         :+:      :+:    :+:   */
+/*   sort_utils_one.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:39:12 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/22 16:37:30 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/05/29 14:52:49 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	find_left_chunk(t_slist **top_a, int start_chunk, int end_chunk)
 	while (current)
 	{
 		pos++;
-		if (current->data >= start_chunk && current->data <= end_chunk)
+		if (current->map >= start_chunk && current->map <= end_chunk)
 			return (pos);
 		current = current->next;
 	}
@@ -73,7 +73,7 @@ int	find_right_chunk(t_slist **top_a, int start_chunk, int end_chunk)
 	while (current)
 	{
 		i++;
-		if (current->data >= start_chunk && current->data <= end_chunk)
+		if (current->map >= start_chunk && current->map <= end_chunk)
 			pos = i;
 		current = current->next;
 	}

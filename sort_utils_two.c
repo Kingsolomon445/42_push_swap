@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_sort_utils_two.c                         :+:      :+:    :+:   */
+/*   sort_utils_two.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:39:52 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/23 12:51:46 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/05/29 10:28:15 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,33 @@ void	do_if_alloc_fails(t_slist **top_a, t_slist **top_b)
 	exit(EXIT_FAILURE);
 }
 
-void perform_moves(t_slist **top_a, t_slist **top_b, t_actlist *act)
+int	max(int nbr1, int nbr2)
 {
-    if (act->ra_moves < act->rra_moves && act->rb_moves < act->rrb_moves)
-        rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
-    else if (act->ra_moves >= act->rra_moves && act->rb_moves >= act->rrb_moves)
-        rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
-    else if ((max(act->ra_moves, act->rb_moves) <= (act->ra_moves + act->rrb_moves)) && (max(act->ra_moves, act->rb_moves) <= (act->rra_moves + act->ra_moves)))
-        rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
-    else if (max(act->rra_moves, act->rrb_moves) <= act->ra_moves + act->rrb_moves && max(act->rra_moves, act->rrb_moves) <= act->rra_moves + act->ra_moves)
-        rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
-    else
-    {
-        r_or_rr_action(act->ra_moves, act->rra_moves, top_a, 'a');
-        r_or_rr_action(act->rb_moves, act->rrb_moves, top_b, 'b');
-    }
-    push(top_b, top_a, 'b');
+	if (nbr1 > nbr2)
+		return (nbr1);
+	return (nbr2);
+}
+
+void	perform_moves(t_slist **top_a, t_slist **top_b, t_actlist *act)
+{
+	if (act->ra_moves < act->rra_moves && act->rb_moves < act->rrb_moves)
+		rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
+	else if (act->ra_moves >= act->rra_moves && act->rb_moves >= act->rrb_moves)
+		rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
+	else if ((max(act->ra_moves, act->rb_moves) <= (act->ra_moves + act->\
+	rrb_moves)) && (max(act->ra_moves, act->rb_moves) <= \
+	(act->rra_moves + act->ra_moves)))
+		rr_action(act->ra_moves, act->rb_moves, top_a, top_b);
+	else if (max(act->rra_moves, act->rrb_moves) <= act->ra_moves + \
+	act->rrb_moves && max(act->rra_moves, act->rrb_moves) <= \
+	act->rra_moves + act->ra_moves)
+		rrr_action(act->rra_moves, act->rrb_moves, top_a, top_b);
+	else
+	{
+		r_or_rr_action(act->ra_moves, act->rra_moves, top_a, 'a');
+		r_or_rr_action(act->rb_moves, act->rrb_moves, top_b, 'b');
+	}
+	push(top_b, top_a, 'b');
 }
 
 /*
