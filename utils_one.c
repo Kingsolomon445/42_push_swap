@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils_one.c                              :+:      :+:    :+:   */
+/*   utils_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:58:51 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/23 13:10:56 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/05/31 11:03:29 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,23 @@ int	get_chunks_size(t_slist **top)
 	int	chunks;
 
 	size = lstsize(*top);
+	if (size >= 10000)
+		chunks = 40 + (size/5000 * 6);
 	if (size >= 5000)
 		chunks = 40;
 	else if (size >= 1000)
 		chunks = 18;
 	else if (size >= 500)
-		chunks = 15;
+		chunks = 13;
 	else if (size >= 300)
 		chunks = 10;
 	else if (size >= 150)
 		chunks = 8;
 	else if (size >= 50)
 		chunks = 6;
-	else
+	else if (size >= 20)
 		chunks = 4;
+	else
+		chunks = 1;
 	return (chunks);
 }

@@ -6,7 +6,7 @@
 #    By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 15:20:35 by ofadahun          #+#    #+#              #
-#    Updated: 2023/05/23 14:18:54 by ofadahun         ###   ########.fr        #
+#    Updated: 2023/05/31 10:32:44 by ofadahun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,9 +65,9 @@ $(TESTER):
 	perl $(TESTER) 5 100
 
 100: $(NAME) $(TESTER)
-	perl $(TESTER) 100 100
+	perl $(TESTER) 100 500
 
 500: $(NAME) $(TESTER)
-	perl $(TESTER) 500 100
+	perl $(TESTER) 500 300
 
 .PHONY: all clean fclean testclean re reb vis 3 5 100 500

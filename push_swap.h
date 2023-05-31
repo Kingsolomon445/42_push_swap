@@ -6,7 +6,7 @@
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:47:11 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/29 14:39:06 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/05/31 17:52:42 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	free_arg_split(char **arg_split);
 int		eval_args(t_slist **top, char *arg);
 int		check_for_duplicates(t_slist **top);
 long	ft_atol(const char *str);
+void	map_lst(t_slist **top_a);
 
 void	lstadd_front(t_slist **lst, t_slist *new);
 void	lstadd_back(t_slist **lst, t_slist *new);
@@ -68,6 +69,7 @@ int		find_smallest(t_slist **top_b);
 int		find_left_chunk(t_slist **top_a, int start_chunk, int end_chunk);
 int		find_right_chunk(t_slist **top_a, int start_chunk, int end_chunk);
 
+void	sort_three(t_slist **top_a);
 void	r_or_rr_action(int r_moves, int rr_moves, t_slist **top, char stack);
 void	rr_action(int ra_moves, int rb_moves, t_slist **top_a, t_slist **top_b);
 void	rrr_action(\
