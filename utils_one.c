@@ -6,7 +6,7 @@
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:58:51 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/31 11:03:29 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:40:24 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	is_in_order(t_slist **top_a)
 	t_slist	*current;
 
 	current = *top_a;
+	if (!current)
+		return (0);
 	while (current->next)
 	{
 		if (current->data > current->next->data)
@@ -69,7 +71,7 @@ int	get_chunks_size(t_slist **top)
 
 	size = lstsize(*top);
 	if (size >= 10000)
-		chunks = 40 + (size/5000 * 6);
+		chunks = 40 + (size / 5000 * 6);
 	if (size >= 5000)
 		chunks = 40;
 	else if (size >= 1000)

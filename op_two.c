@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations_two.c                                   :+:      :+:    :+:   */
+/*   op_two.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 17:42:38 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/06/02 10:33:32 by ofadahun         ###   ########.fr       */
+/*   Created: 2023/06/02 10:26:54 by ofadahun          #+#    #+#             */
+/*   Updated: 2023/06/02 15:02:22 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rotate_both(t_slist **top_a, t_slist **top_b)
+void	rra(t_slist **top)
 {
-	rotate(top_a);
-	rotate(top_b);
+	reverse_rotate(top);
+	ft_printf("rra\n");
 }
 
-void	reverse_rotate_both(t_slist **top_a, t_slist **top_b)
+void	rrb(t_slist **top)
 {
-	reverse_rotate(top_a);
-	reverse_rotate(top_b);
+	reverse_rotate(top);
+	ft_printf("rrb\n");
 }
 
-void	swap_both(t_slist **top_a, t_slist **top_b)
+void	sa(t_slist **top)
 {
-	swap(top_a);
-	swap(top_b);
+	swap(top);
+	ft_printf("sa\n");
+}
+
+void	sb(t_slist **top)
+{
+	swap(top);
+	ft_printf("sb\n");
 }

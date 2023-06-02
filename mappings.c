@@ -6,7 +6,7 @@
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:32:41 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/31 14:34:30 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:03:19 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	find_next_smallest(t_slist **top_b, int previous_smallest)
 
 int	get_elem_map(t_slist **top, int data)
 {
-	t_slist *current;
+	t_slist	*current;
 
 	current = *top;
-	while(current)
+	while (current)
 	{
 		if (current->data == data)
-			break;
+			break ;
 		current = current->next;
 	}
 	return (current->map);
@@ -60,9 +60,9 @@ void	map_elem(t_slist **top, int data, int map)
 
 void	map_lst(t_slist **top_a)
 {
-	int size;
-	int map;
-	int cur_smallest;
+	int	size;
+	int	map;
+	int	cur_smallest;
 
 	size = lstsize(*top_a);
 	map = 1;
