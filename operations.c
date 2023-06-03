@@ -6,11 +6,11 @@
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:32:14 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/06/02 10:32:24 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/06/03 12:11:52 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker.h"
 
 void	push(t_slist **top_first, t_slist **top_second)
 {

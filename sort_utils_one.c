@@ -6,76 +6,120 @@
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 09:39:12 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/05/29 14:52:49 by ofadahun         ###   ########.fr       */
+/*   Updated: 2023/06/03 10:29:55 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	find_largest(t_slist **top_a)
+int	find_least_elem(t_slist **top)
 {
-	int		largest;
+	int		least_elem;
 	t_slist	*current;
 
-	largest = -2147483646;
-	current = *top_a;
+	least_elem = INT_MAX;
+	current = *top;
 	while (current)
 	{
-		if (current->data > largest)
-			largest = current->data;
+		if (current->map < least_elem)
+			least_elem = current->map;
 		current = current->next;
 	}
-	return (largest);
+	return (least_elem);
 }
 
-int	find_smallest(t_slist **top_b)
+int	find_in_other_stack(t_slist **top, int elem)
 {
-	int		smallest;
 	t_slist	*current;
 
-	current = *top_b;
-	smallest = 2147483646;
+	current = *top;
 	while (current)
 	{
-		if (current->data < smallest)
-			smallest = current->data;
+		if (current->map == elem)
+			return (1);
 		current = current->next;
 	}
-	return (smallest);
+	return (0);
 }
 
-int	find_left_chunk(t_slist **top_a, int start_chunk, int end_chunk)
+/*
+Checks all elems in stack_a and whichever requires the least moves to bring
+to the correct position in stack_b is used.
+Algorithm for decision: 
+if number to be pushed is lesser than all elements in b
+	we bring the biggest elem in b to top
+	we bring that number to push in a to top
+	we push to b
+else
+	we find b_elem which is immediately lesser to the a_elem
+	we bring both to the tops of their respective stacks
+	we push to b
+*/
+t_actlist	find_moves_cost(t_slist **top_b, \
+t_slist **top_a, int a_elem, int least_b_elem)
 {
-	t_slist	*current;
-	int		pos;
+	int			pos;
+	t_actlist	act;
 
-	current = *top_a;
-	pos = 0;
-	while (current)
+	if ((a_elem > least_b_elem))
 	{
-		pos++;
-		if (current->map >= start_chunk && current->map <= end_chunk)
-			return (pos);
-		current = current->next;
+		least_b_elem = a_elem;
+		while (--least_b_elem && find_in_other_stack(top_a, least_b_elem))
+			continue ;
+		pos = find_elem_pos(top_b, least_b_elem);
 	}
-	return (-1);
+	else
+		pos = find_elem_pos(top_b, find_largest(top_b));
+	act.rb_moves = pos;
+	act.rrb_moves = lstsize(*top_b) - pos + 2;
+	pos = find_elem_pos(top_a, a_elem);
+	act.ra_moves = pos;
+	act.rra_moves = lstsize(*top_a) - pos + 2;
+	act.total_moves = calculate_moves(act.ra_moves, \
+	act.rb_moves, act.rra_moves, act.rrb_moves);
+	return (act);
 }
 
-int	find_right_chunk(t_slist **top_a, int start_chunk, int end_chunk)
+void	push_from_a_to_b(t_slist **top_a, t_slist **top_b, int *least_b_elem)
 {
-	t_slist	*current;
-	int		i;
-	int		pos;
+	int			a_elem;
+	t_slist		*current;
+	int			prev_total_moves;
+	t_actlist	act;
 
 	current = *top_a;
-	pos = -1;
-	i = 0;
+	prev_total_moves = 2147483647;
 	while (current)
 	{
-		i++;
-		if (current->map >= start_chunk && current->map <= end_chunk)
-			pos = i;
+		act = find_moves_cost(top_b, top_a, current->map, *least_b_elem);
+		if (act.total_moves < prev_total_moves)
+		{
+			prev_total_moves = act.total_moves;
+			a_elem = current->map;
+			if (prev_total_moves <= 2)
+				break ;
+		}
 		current = current->next;
 	}
-	return (pos);
+	act = find_moves_cost(top_b, top_a, a_elem, *least_b_elem);
+	if (a_elem < *least_b_elem)
+		*least_b_elem = a_elem;
+	make_moves(act, top_a, top_b);
+}
+
+void	sort(t_slist **top_a)
+{
+	t_slist	*top_b;
+	int		first_push;
+	int		least_b_elem;
+
+	first_push = 2;
+	top_b = NULL;
+	while (--first_push)
+		pb(top_a, &top_b);
+	least_b_elem = find_least_elem(&top_b);
+	while (lstsize(*top_a) > 3)
+		push_from_a_to_b(top_a, &top_b, &least_b_elem);
+	sort_three(top_a);
+	push_from_b_to_a(top_a, &top_b);
 }

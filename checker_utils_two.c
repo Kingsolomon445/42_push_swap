@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_one.c                                        :+:      :+:    :+:   */
+/*   checker_utils_two.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ofadahun <ofadahun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 14:58:51 by ofadahun          #+#    #+#             */
-/*   Updated: 2023/06/03 10:33:53 by ofadahun         ###   ########.fr       */
+/*   Created: 2023/06/03 12:04:57 by ofadahun          #+#    #+#             */
+/*   Updated: 2023/06/03 12:26:36 by ofadahun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-
-int	min(int nbr1, int nbr2)
-{
-	if (nbr1 < nbr2)
-		return (nbr1);
-	return (nbr2);
-}
-
-int	max(int nbr1, int nbr2)
-{
-	if (nbr1 > nbr2)
-		return (nbr1);
-	return (nbr2);
-}
+#include "checker.h"
 
 void	do_if_alloc_fails(t_slist **top_a, t_slist **top_b)
 {
@@ -54,4 +40,45 @@ int	is_in_order(t_slist **top_a)
 		current = current->next;
 	}
 	return (1);
+}
+
+void	free_all(t_slist **top)
+{
+	t_slist	*tmp;
+
+	if (!(*top))
+		return ;
+	while ((*top)->next)
+	{
+		tmp = *top;
+		*top = (*top)->next;
+		free(tmp);
+	}
+	free(*top);
+}
+
+long	ft_atol(const char *str)
+{
+	long	res;
+	int		sign;
+
+	res = 0;
+	sign = 1;
+	while (*str == ' ' || *str == '\n' || *str == '\t' || *str == '\v' || \
+	*str == '\f' || *str == '\r')
+		str++;
+	if (*str == '-')
+	{
+		sign *= -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	while (*str >= 48 && *str <= 57)
+	{
+		res *= 10;
+		res += *str - 48;
+		str++;
+	}
+	return (res * sign);
 }
