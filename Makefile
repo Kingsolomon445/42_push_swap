@@ -11,10 +11,16 @@
 # **************************************************************************** #
 
 NAME		=	push_swap
+BONUS_NAME	=	checker
 
-
-SRCS		=	$(wildcard *.c)
-OBJS		=	$(SRCS:.c=.o)
+PUSH_SWAP_DIR	=	push_swap_srcs
+CHECKER_DIR	=	checker_srcs
+PUSH_SWAP_OBJ_DIR = ./push_swap_obj
+CHECKER_OBJ_DIR = ./checker_obj
+SRCS		=	$(wildcard $(PUSH_SWAP_DIR)/*.c)
+OBJS		=	$(addprefix $(PUSH_SWAP_OBJ_DIR)/,$(notdir $(SRCS:.c=.o)))
+BONUS_SRCS	=	$(wildcard $(CHECKER_DIR)/*.c)
+BONUS_OBJS	=	$(addprefix $(CHECKER_OBJ_DIR)/,$(notdir $(BONUS_SRCS:.c=.o)))
 
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
@@ -29,23 +35,40 @@ FTPRINTF		=	$(FTPRINTF_DIR)/$(FTPRINTF_LIB)
 TESTER_GET	=	https://raw.githubusercontent.com/lorenuars19/push_swap_tester/main/push_swap_tester.pl
 TESTER		=	./ps_tester.pl
 
-$(NAME): $(FTPRINTF) $(OBJS)
+$(PUSH_SWAP_OBJ_DIR):
+	mkdir -p $(PUSH_SWAP_OBJ_DIR)
+
+$(CHECKER_OBJ_DIR):
+	mkdir -p $(CHECKER_OBJ_DIR)
+
+$(NAME): $(FTPRINTF) $(PUSH_SWAP_OBJ_DIR) $(OBJS)
 	$(CC) -o $(NAME) $(OBJS) $(FTPRINTF)
+
+$(BONUS_NAME): $(FTPRINTF) $(CHECKER_OBJ_DIR) $(BONUS_OBJS)
+	$(CC) -o $(BONUS_NAME) $(BONUS_OBJS) $(FTPRINTF)
+
 
 $(FTPRINTF):
 	make -C $(FTPRINTF_DIR)
 
-%.o: %.c
+$(PUSH_SWAP_OBJ_DIR)/%.o: $(PUSH_SWAP_DIR)/%.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
+$(CHECKER_OBJ_DIR)/%.o: $(CHECKER_DIR)/%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 all: $(NAME)
 
+bonus:	$(BONUS_NAME)
+
 clean:
-	$(RM) $(RMFLAGS) $(OBJS)
+	$(RM) $(RMFLAGS) $(PUSH_SWAP_OBJ_DIR)
+	$(RM) $(RMFLAGS) $(CHECKER_OBJ_DIR)
 	make -C $(FTPRINTF_DIR) clean
 
 fclean: clean
 	$(RM) $(RMFLAGS) $(NAME)
+	$(RM) $(RMFLAGS) $(BONUS_NAME)
 	make -C $(FTPRINTF_DIR) fclean
 
 testclean: 
@@ -70,4 +93,4 @@ $(TESTER):
 500: $(NAME) $(TESTER)
 	perl $(TESTER) 500 300
 
-.PHONY: all clean fclean testclean re reb vis 3 5 100 500
+.PHONY: all bonus clean fclean testclean re reb vis 3 5 100 500

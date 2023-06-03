@@ -95,6 +95,7 @@ int	main(int argc, char *argv[])
 	char	*moves;
 
 	fd = 0;
+	top_a = NULL;
 	if (argc < 2)
 		return (0);
 	i = 0;
