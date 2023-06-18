@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stddef.h>
-# include "../ft_printf/ft_printf.h"
+# include "../libft/libft.h"
 
 typedef struct ls_list
 {
@@ -31,12 +31,6 @@ typedef struct ls_list
 t_slist	*lstnew(int data);
 int     lstsize(t_slist *lst);
 void	lstadd_back(t_slist **lst, t_slist *new);
-
-int		ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
-void	*ft_memset(void *s, int c, size_t len);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char	*get_next_line(int fd);
 
 int		ft_strcmp(const char *s1, const char *s2);
 char	*free_str(char *str);
